@@ -1,5 +1,10 @@
 <?php
+// session_start();
+// echo "<pre>";
+// print_r($_SESSION['userdata']);
+// print_r($_SESSION['userdata']['name']);
 
+// echo "</pre>";
 
 ?>
 <!doctype html>
@@ -51,7 +56,7 @@
   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" href="#">Sign out</a>
+      <a class="nav-link px-3" href="signout">Sign out</a>
     </div>
   </div>
 </header>
@@ -74,6 +79,7 @@
             </a>
           </li>
           
+          
         </ul>
       </div>
     </nav>
@@ -94,14 +100,17 @@
       </div>
 
       <form method="POST" action="blog" class="row g-3">
-        <!-- <div class="col-md-6">
-          <label for="inputEmail4" class="form-label">Blog ID</label>
-          <input type="text" name="id" class="form-control" id="inputEmail4">
-        </div> -->
-        <div class="col-md-6">
-          <label for="inputPassword4" class="form-label">Username Name</label>
-          <input type="text" name="name" class="form-control" id="inputPassword4">
+
+        <!-- <div class="col-md-6"> -->
+          <!-- <label for="inputPassword4" class="form-label">Username Name</label> -->
+          <input type="hidden" name="name" class="form-control" id="inputPassword4" value = <?php print_r($_SESSION['userdata']['name']); ?>>
+        <!-- </div> -->
+        
+        <div class="col-md-12">
+          <label for="inputPassword5" class="form-label">Username Name</label>
+          <input type="text" name="" class="form-control" id="" value = <?php print_r($_SESSION['userdata']['name']); ?> disabled >
         </div>
+
         <div class="col-12">
           <label for="inputAddress" class="form-label">Blog Title</label>
           <input type="text" class="form-control" name="title" id="inputAddress" >
@@ -110,23 +119,7 @@
           <label for="inputAddress" class="form-label">Blog Content</label>
           <input type="text" class="form-control" name="content" id="inputAddress" >
         </div>
-        <!-- <div class="col-12">
-          <label for="inputAddress2" class="form-label">Blog Content</label>
-          <input type="file" name="uploadfile" class="form-control" id="inputAddress2" >
-        </div> -->
-        <!-- <button value="" type="submit">Upload</button> -->
-        <!-- <div class="col-md-6">
-          <label for="inputCity" class="form-label">Product Category</label>
-          <input type="text" name="category" class="form-control" id="inputCity">
-        </div> -->
-        <!-- <div class="col-md-4">
-         
-        </div>
-        <div class="col-md-12">
-          <label for="inputZip" class="form-label">Product Description</label>
-          <input type="text" name="description" class="form-control" id="inputZip">
-        </div>
-        <div class="col-12"> -->
+        
           <button type="submit" name="add" class="btn btn-primary">Add Blog</button>
         </div>
        

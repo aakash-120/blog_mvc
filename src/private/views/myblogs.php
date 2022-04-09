@@ -1,4 +1,12 @@
+<?php
+//session_start();
+// if(isset($_SESSION['userdata'])){
+    // echo "<pre>";
+    // print_r($_SESSION['userdata']);
+    // echo "</pre>";
+// }
 
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -49,7 +57,7 @@
   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" href="/Admin/signout">Sign out</a>
+      <a class="nav-link px-3" href="signout">Sign out</a>
     </div>
   </div>
 </header>
@@ -60,26 +68,25 @@
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="">
+            <a class="nav-link active" aria-current="page" href="home">
               <span data-feather="home"></span>
-              Dashboard
+              Add blog
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/Admin/blogs">
-              <span data-feather="home"></span>
-              BLOGS
+            <a class="nav-link" href="myblogs">
+              <span data-feather="file"></span>
+              Home
             </a>
           </li>
-         
-         
+          
         </ul>        
       </div>
     </nav>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
+        <h1 class="h2">MY BLOGS</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
             <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -92,45 +99,35 @@
         </div>
       </div>
 
-      <h2>USERS</h2>
-      <div class="table-responsive">
-        <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">NAME</th>
-              <th scope="col">EMAIL</th>
-              <th scope="col">PASSWORD</th>
-              <th scope="col">ROLE</th>
-              <th scope="col">ACCESS</th>
-              <th scope="col">Permission</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            $data=$this->model('Users')::all();
-            // echo "<pre>";
-            // print_r($data);
+   
+
+
+        <?php
+
+
+        if(isset($_SESSION['userdata'])){
+            // echo "session data<pre>";
+            // print_r($_SESSION['userdata']);
             // echo "</pre>";
-             $html="";
-             foreach($data as $k=>$v) {
-               $html.='<form method="POST" action="/Admin/access" ><tr>
-               <td>'.$v->userid.'</td>
-               <td>'.$v->username.'</td>
-               <td>'.$v->email.'</td>
-              <td>'.$v->password.'</td>
-               <td>'.$v->role.'</td>
-               <td>'.$v->status.'</td>
-               <td><input type="hidden" name="userid" value='.$v->userid.'>
-               <input type="hidden" name="status" value='.$v->status.'>
-               <button type ="submit" id="change" value='.$v->userid.' name="approved">APPROVE/RESTRICT</button>
-           </tr></form>';
-             }
-             $html.="";
-             echo $html;
-           ?>
-          </tbody>
-        </table>
+    
+         $data=$this->model('Posts')::all();
+         foreach($data as $k){
+             if($k->username==$_SESSION['userdata']['name']){
+             ?>
+             <div class="container">
+                 <div class="card mt-5" style="width:20rem height=20rem;">
+                 <div class="card-body">
+                     <h5 class="card-title"><?php echo $k->id;?></h5>
+                     <h5 class="card-title"><?php echo $k->title;?></h5>
+                     <p class="card-text"><?php echo $k->content; ?></p>
+                    <form action="edit" method="post"><button type="submit" name="submit" style="padding:10px">Edit</button><input type="text" hidden name="id" value="<?php echo $k->id;?>"> </form>
+                    <br>
+                    <form action="delete" method="post"><button type="submit" name="submit" style="padding:10px">Delete</button><input type="text" hidden name="id" value="<?php echo $k->id;?>"> </form>
+                 </div>
+                 </div>
+             </div>
+    <?php } }  }  ?>
+        
       </div>
     </main>
   </div>
